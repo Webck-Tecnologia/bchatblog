@@ -1,4 +1,4 @@
-# Use the official Node.js 18 image as the base image
+# Use the official Node.js 18 image as the base image for the build stage
 FROM node:18-alpine AS builder
 
 # Set the working directory inside the container
@@ -29,6 +29,7 @@ RUN npm install -g serve
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./next.config.js
 
 # Set environment variable to production
 ENV NODE_ENV production
